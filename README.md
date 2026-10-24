@@ -26,26 +26,24 @@ Named volumes preserve data after `docker compose down`.
 
 ## Host development
 
-Use Python 3.11 or 3.13 and a repository-local virtual environment:
+Install uv and use Python 3.15. Run these commands from the repository root;
+uv manages the virtual environment in `backend/.venv`:
 
 ```sh
-python -m venv .venv
-.venv/Scripts/activate
-python -m pip install -r backend/requirements-dev.txt
-python -m pip install --no-deps --no-build-isolation -e backend
-pytest -q
-ruff check .
-ruff format --check .
+uv python install 3.15
+uv sync --project backend --frozen
+uv run --project backend pytest -q
+uv run --project backend ruff check .
+uv run --project backend ruff format --check .
+uv lock --project backend --check
 ```
 
-On POSIX use `source .venv/bin/activate`; in PowerShell use
-`.\.venv\Scripts\Activate.ps1`. Run commands from the repository root.
 Settings read environment variables (see `.env.example`); host processes do not
 automatically load `.env`. Export settings when overriding the localhost defaults.
 With dependency services running, start the host API using:
 
 ```sh
-uvicorn visionguard.api.main:app --no-access-log
+uv run --project backend uvicorn visionguard.api.main:app --no-access-log
 ```
 
 `/health` always reports liveness without contacting dependencies. `/ready` runs

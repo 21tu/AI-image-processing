@@ -1,13 +1,19 @@
-FROM python:3.11-slim
+FROM python:3.15-slim
+
+COPY --from=ghcr.io/astral-sh/uv:0.13.5 /uv /uvx /bin/
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+    UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PROJECT_ENVIRONMENT=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
 WORKDIR /app
-COPY backend/requirements.txt /app/backend/requirements.txt
-RUN python -m pip install -r /app/backend/requirements.txt setuptools==80.3.1
+COPY backend/pyproject.toml backend/uv.lock /app/backend/
+RUN uv sync --project backend --frozen --no-dev --no-install-project
 COPY backend /app/backend
-RUN python -m pip install --no-deps --no-build-isolation /app/backend \
+RUN uv sync --project backend --frozen --no-dev --no-editable \
     && useradd --create-home --uid 10001 visionguard
 COPY workers /app/workers
 COPY scripts /app/scripts

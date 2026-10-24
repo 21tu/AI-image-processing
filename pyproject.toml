@@ -3,7 +3,7 @@ testpaths = ["backend/tests"]
 pythonpath = ["backend/src", "."]
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py315"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]

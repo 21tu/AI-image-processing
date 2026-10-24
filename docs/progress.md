@@ -11,3 +11,4 @@
 - D-002: single `visionguard` Python package, `workers/` and `ml/` import it.
 - D-003: MinIO images not pullable -> SeaweedFS 3.85 (ADR-001).
 - Process note: Codex sandbox cannot access Docker pipe; Claude runs Docker verification.
+- D-004: Python 3.15 (container 3.15.1, host uv-managed 3.15.0rc3) + uv 0.13.5 in Docker, uv.lock committed (ADR-002). Verified: compose healthy, smoke PASS, redis-down 503 -> 200, pytest 19 passed. Risk: PyTorch wheels for 3.15 (TASK-005). Note: ruff 0.17 formats `except A, B:` (PEP 758); code now requires >=3.14 syntax.

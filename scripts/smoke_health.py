@@ -29,7 +29,7 @@ def main() -> int:
                         raise ValueError("Unexpected health response")
             print("PASS: /health and /ready returned the expected HTTP 200 bodies")
             return 0
-        except (HTTPError, URLError, OSError, ValueError):
+        except HTTPError, URLError, OSError, ValueError:
             if time.monotonic() >= deadline:
                 print(
                     "FAIL: health/readiness did not become available", file=sys.stderr

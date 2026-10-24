@@ -49,7 +49,7 @@ def main() -> int:
                 ensure_bucket(client, settings.s3_bucket, settings.s3_region)
                 print("S3 bucket is ready")
                 return 0
-            except (BotoCoreError, ClientError):
+            except BotoCoreError, ClientError:
                 # Avoid leaking credentials or endpoint details in startup logs.
                 print(f"S3 bucket initialization attempt {attempt + 1}/30 failed")
                 if attempt < 29:
