@@ -1,4 +1,6 @@
 [tool.pytest.ini_options]
+markers = ["db: requires real PostgreSQL"]
+cache_dir = ".venv/pytest-cache"
 testpaths = ["backend/tests"]
 pythonpath = ["backend/src", "."]
 

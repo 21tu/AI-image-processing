@@ -1,0 +1,5 @@
+# TASK-002-fix1
+F1 (MAJOR): default TEST_DATABASE_URL in backend/tests/db/test_schema.py uses `localhost`; on Windows this hangs (IPv6 first). Change the default to 127.0.0.1. Also change `.env.example` and Settings defaults for database_url/redis_url/s3_endpoint_url from `localhost` to `127.0.0.1` (host-run commands only; compose uses service names). Update README mentions if any.
+F2 (MINOR): `predictions.latency_ms >= 0` accepts NaN in PostgreSQL. Tighten to `latency_ms >= 0 AND latency_ms <> 'NaN'::float8` (and reject Infinity if simple) via a NEW migration `0002_...` (do not edit 0001). Add a test that NaN is rejected. Migration parity (`alembic check`) and downgrade must still work.
+Out of scope: everything else. MINOR not fixed (recorded): predictions.model_version_id is not DB-enforced to equal the job's model_version_id; no index on predictions.model_version_id.
+Verify: uv run --project backend pytest -q (Postgres at 127.0.0.1:5432 is up), ruff check, ruff format --check, uv lock --check, alembic upgrade head/check/downgrade base on dev DB. No commit/push; no edits to docs/ or CLAUDE.md.

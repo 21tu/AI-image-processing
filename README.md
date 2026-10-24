@@ -39,7 +39,7 @@ uv lock --project backend --check
 ```
 
 Settings read environment variables (see `.env.example`); host processes do not
-automatically load `.env`. Export settings when overriding the localhost defaults.
+automatically load `.env`. Export settings when overriding the 127.0.0.1 defaults.
 With dependency services running, start the host API using:
 
 ```sh

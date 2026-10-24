@@ -15,6 +15,8 @@ RUN uv sync --project backend --frozen --no-dev --no-install-project
 COPY backend /app/backend
 RUN uv sync --project backend --frozen --no-dev --no-editable \
     && useradd --create-home --uid 10001 visionguard
+COPY backend/alembic.ini /app/alembic.ini
+COPY backend/alembic /app/alembic
 COPY workers /app/workers
 COPY scripts /app/scripts
 USER visionguard
