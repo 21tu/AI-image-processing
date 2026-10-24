@@ -1,0 +1,1 @@
+"""VisionGuard shared application package."""
