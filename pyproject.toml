@@ -1,5 +1,5 @@
 [tool.pytest.ini_options]
-markers = ["db: requires real PostgreSQL"]
+markers = ["db: requires real PostgreSQL", "s3: requires real S3 store"]
 cache_dir = ".venv/pytest-cache"
 testpaths = ["backend/tests"]
 pythonpath = ["backend/src", "."]

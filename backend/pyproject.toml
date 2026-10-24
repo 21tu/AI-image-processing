@@ -12,9 +12,11 @@ dependencies = [
     "boto3==1.43.118",
     "celery==5.6.3",
     "fastapi==0.162.0",
+    "pillow==13.0.0",
     "psycopg[binary]==3.3.6",
     "pydantic==2.14.1",
     "pydantic-settings==2.16.1",
+    "python-multipart==0.0.32",
     "redis==8.1.0",
     "sqlalchemy==2.1.6",
     "uvicorn==0.54.0",
@@ -31,7 +33,7 @@ dev = [
 where = ["src"]
 
 [tool.pytest.ini_options]
-markers = ["db: requires real PostgreSQL"]
+markers = ["db: requires real PostgreSQL", "s3: requires real S3 store"]
 cache_dir = ".venv/pytest-cache"
 testpaths = ["tests"]
 pythonpath = ["src", ".."]

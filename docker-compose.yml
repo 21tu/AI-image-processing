@@ -8,6 +8,7 @@ x-app-environment: &app-environment
   S3_REGION: ${S3_REGION:-us-east-1}
   APP_ENV: ${APP_ENV:-development}
   LOG_LEVEL: ${LOG_LEVEL:-INFO}
+  MAX_IMAGE_PIXELS: ${MAX_IMAGE_PIXELS:-50000000}
   MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:-10485760}
 
 services:
@@ -54,7 +55,8 @@ services:
 
   objectstore:
     image: chrislusf/seaweedfs:3.85
-    command: ["server", "-dir=/data", "-ip=objectstore", "-ip.bind=0.0.0.0", "-volume.max=5", "-master.volumeSizeLimitMB=100", "-filer", "-s3", "-s3.port=9000", "-s3.config=/config/seaweedfs-s3.json"]
+    # Auto volume capacity: a small fixed max starves new bucket collections.
+    command: ["server", "-dir=/data", "-ip=objectstore", "-ip.bind=0.0.0.0", "-volume.max=0", "-master.volumeSizeLimitMB=100", "-filer", "-s3", "-s3.port=9000", "-s3.config=/config/seaweedfs-s3.json"]
     depends_on:
       storage-config:
         condition: service_completed_successfully

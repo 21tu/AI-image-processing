@@ -58,3 +58,24 @@ Worker ping (inside the running Compose stack):
 ```sh
 docker compose exec worker celery -A workers.celery_app:app call visionguard.ping
 ```
+
+## Media upload
+
+`POST /api/v1/media` accepts multipart field `file` (JPEG, PNG, WebP).
+`GET /api/v1/media/{id}` returns metadata; image bytes are not served.
+Magic bytes and a full decode determine the type. Uploads are re-encoded after
+EXIF orientation, dropping EXIF/GPS/XMP/ICC/text metadata and trailing content.
+JPEG uses quality 95 (lossy); PNG/WebP use lossless encoding. Hash and dimensions
+describe stored bytes. Animated images are rejected. There is no hash deduplication.
+`MAX_UPLOAD_BYTES` defaults to 10 MiB (including the multipart envelope for early
+request rejection); `MAX_IMAGE_PIXELS` defaults to 50,000,000.
+
+With the API and local services running:
+
+```sh
+python scripts/smoke_upload.py --base-url http://127.0.0.1:8000
+```
+
+The smoke script generates a tiny PNG using only the Python standard library.
+It persists one sanitized asset. The S3 integration test requires the real local
+store and fails if unavailable; explicitly set `SKIP_S3_TESTS=1` to skip it.

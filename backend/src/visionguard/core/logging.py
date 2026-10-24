@@ -14,6 +14,9 @@ class JsonFormatter(logging.Formatter):
         }
         if hasattr(record, "status_code"):
             payload["status_code"] = record.status_code
+        for field in ("asset_id", "sha256", "size_bytes", "mime"):
+            if hasattr(record, field):
+                payload[field] = getattr(record, field)
         return json.dumps(payload)
 
 

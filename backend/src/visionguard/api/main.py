@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from starlette.exceptions import HTTPException
 
 from visionguard.api.routes.health import router
+from visionguard.api.routes.media import router as media_router
 from visionguard.core.config import get_settings
 from visionguard.core.logging import setup_logging
 
@@ -80,6 +81,7 @@ def create_app() -> FastAPI:
         )
 
     app.include_router(router)
+    app.include_router(media_router)
     return app
 
 

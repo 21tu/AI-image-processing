@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     s3_region: str = "us-east-1"
     app_env: str = "development"
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
+    max_image_pixels: int = Field(default=50_000_000, gt=0)
     max_upload_bytes: int = Field(default=10 * 1024 * 1024, gt=0)
 
 
