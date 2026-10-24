@@ -14,3 +14,4 @@
 - Process note: Codex sandbox cannot access Docker pipe; Claude runs Docker verification.
 - D-004: Python 3.15 (container 3.15.1, host uv-managed 3.15.0rc3) + uv 0.13.5 in Docker, uv.lock committed (ADR-002). Verified: compose healthy, smoke PASS, redis-down 503 -> 200, pytest 19 passed. Risk: PyTorch wheels for 3.15 (TASK-005). Note: ruff 0.17 formats `except A, B:` (PEP 758); code now requires >=3.14 syntax.
 - D-005: host-run URLs use 127.0.0.1 not localhost (Windows IPv6 fallback hung DB tests).
+- D-006: remote origin = https://github.com/21tu/AI-image-processing (user-approved 2026-10-25). All branches pushed (main, task/001-skeleton, task/002-db). No force push. Authorship: existing git config (user approved).
